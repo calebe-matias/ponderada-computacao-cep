@@ -5,17 +5,8 @@
 Estudo dirigido sobre Processamento de Eventos Complexos usando como domínio um
 aplicativo bancário digital brasileiro (Nubank, BTG, Itaú, Bradesco).
 
-## Sumário
 
-- [1. O que é CEP](#1-o-que-é-cep)
-- [2. Eventos simples e complexos do app bancário](#2-eventos-simples-e-complexos-do-app-bancário)
-- [3. Modelagem UML](#3-modelagem-uml)
-- [4. Cenários de negócio](#4-cenários-de-negócio)
-- [5. Síntese](#5-síntese)
-
----
-
-## 1. O que é CEP
+## Definição de Complex Event Processing
 
 ### Evento
 
@@ -96,9 +87,9 @@ flowchart LR
 
 ---
 
-## 2. Eventos simples e complexos do app bancário
+## 1) Considere um aplicativo digital bancário (ex. Nubank, BTG, ITAU, Bradesco - marcas de bancos Brasileiros). Identificar eventos simples e complexos de negócios e técnicos envolvidos, segundo o conceito de CEP;
 
-### 2.1 Eventos simples de negócio
+### 1.1 Eventos simples de negócio
 
 O que o cliente faz.
 
@@ -120,7 +111,7 @@ O que o cliente faz.
 | `E14` | `CreditoSimulado` | idCliente, valor, prazo, taxa, ts |
 | `E15` | `JornadaAbandonada` | idCliente, jornada, etapa, ts |
 
-### 2.2 Eventos complexos de negócio
+### 1.2 Eventos complexos de negócio
 
 Inferidos por regra CEP a partir dos eventos acima.
 
@@ -135,7 +126,7 @@ Inferidos por regra CEP a partir dos eventos acima.
 | `C07` | `IndicioDeGolpeDoFalsoAtendente` | `E02` fora do horário habitual + `E09` (aumento de limite) + `E05` para chave nova, em menos de 5 min, com chamada telefônica ativa no device |
 | `C08` | `LiquidacaoPixNaoConfirmada` | `E06` **sem** o `E07` correspondente em 30 s (*ausência*) |
 
-### 2.3 Eventos simples técnicos
+### 1.3 Eventos simples técnicos
 
 O que a plataforma faz.
 
@@ -154,7 +145,7 @@ O que a plataforma faz.
 | `T11` | `TentativaDeAcessoNegada` | idCliente, recurso, ip, ts |
 | `T12` | `CrashDoAppMobile` | versãoApp, sistemaOperacional, ts |
 
-### 2.4 Eventos complexos técnicos
+### 1.4 Eventos complexos técnicos
 
 | ID | Evento complexo | Regra de derivação |
 |---|---|---|
@@ -171,9 +162,9 @@ O que a plataforma faz.
 
 ---
 
-## 3. Modelagem UML
+## 2) Elaborar uma modelagem estática e dinâmica usando UML destes eventos;
 
-### 3.1 Modelagem estática - diagrama de classes
+### 2.1 Modelagem estática - diagrama de classes
 
 **Hierarquia de eventos**
 
@@ -305,7 +296,7 @@ classDiagram
 - `RegraCEP` é objeto de primeira classe: regras podem ser criadas, versionadas
   e desativadas sem novo deploy do core bancário.
 
-### 3.2 Modelagem dinâmica - diagrama de sequência
+### 2.2 Modelagem dinâmica - diagrama de sequência
 
 Detecção de fraude em Pix, ponta a ponta.
 
@@ -357,7 +348,7 @@ sequenceDiagram
     end
 ```
 
-### 3.3 Modelagem dinâmica - diagrama de estados
+### 2.3 Modelagem dinâmica - diagrama de estados
 
 Ciclo de vida da transação Pix sob supervisão do CEP.
 
@@ -374,7 +365,7 @@ stateDiagram-v2
     Rejeitada --> [*]
 ```
 
-### 3.4 Modelagem dinâmica - diagrama de atividades
+### 2.4 Modelagem dinâmica - diagrama de atividades
 
 Pipeline interno do motor CEP.
 
@@ -397,7 +388,7 @@ flowchart TD
     K --> L(["Fim do ciclo"])
 ```
 
-### 3.5 Por que estes quatro diagramas
+### 2.5 Por que estes quatro diagramas
 
 | Diagrama | Visão | O que responde |
 |---|---|---|
@@ -408,7 +399,7 @@ flowchart TD
 
 ---
 
-## 4. Cenários de negócio
+## 3) Criar cenários de Negócios - 3 cenários indicando como os eventos podem aprimorar a eficiência das transações. Justificar.
 
 ### Cenário 1 - Antifraude em tempo real no Pix
 
@@ -476,7 +467,7 @@ flowchart TD
 
 ---
 
-## 5. Síntese
+## Síntese
 
 Eventos simples são fatos isolados e baratos de coletar; sozinhos, dizem pouco.
 O valor do CEP está em transformar esse fluxo em **conhecimento acionável** por
